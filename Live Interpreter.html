@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/blob-polyfill/7.0.20220408/Blob.min.js" integrity="sha512-uPm9nh4/QF6a7Mz4Srk0lXfN7T+PhKls/NhWUKpXUbu3xeG4bXhtbw2NCye0BRXopnD0x+SBDMOWXOlHAwqgLw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <title>Live HTML Interpreter</title>
+    </head>
+
+    <body>
+        <style type="text/css">
+            *{
+                box-sizing: border-box;
+                margin:  0;
+                padding: 0;  
+                  overflow: hidden;  
+            }
+
+            body{
+                color: lime;
+                background: #010533;
+                height: 100vh;
+                width: 100vw;
+               
+            }
+
+            .navigation{
+                font-size: 18px;
+                top:  0;
+                left: 0;
+                padding: 10px;
+                padding-top: 20px;
+                position: sticky;
+                position: -webkit-sticky;
+                background: #010533;
+                width: 100vw;
+                height: 10vh;
+                justify-content: space-between;
+                z-index: 1;
+                display: flex;
+                align-content: center;
+                align-items: center;
+            }
+
+            .heading {
+                font-size: 26px;
+            }
+
+
+            .navigation li {
+                list-style: none;
+                display: inline;
+            }
+
+            .info {
+                position: absolute;
+                z-index: 8;
+                padding: 2px;
+                font-size: 12px;
+                background: black;
+                display: none;
+            }
+
+             li:hover .info{
+                display:inline;
+                color:  red;
+            }
+
+            .d_and_t {
+                color: red;
+            }
+
+            .code_here{
+                margin: 15px;
+                float: left;
+                width: 47%;
+                height: 85vh;
+                background: black;
+            }
+
+            .compile{
+                position: sticky;
+                z-index: 7;
+                padding: 10px;
+                background: gray;
+                color: white;
+                align-items: center;
+                border-radius: 20px 20px;
+                display: none;
+            }
+
+            .compile:hover {
+                color: lime;
+            }
+
+            .save {
+                display:none;
+            }
+
+            .output_here{
+                margin: 15px;
+                padding: 10px;
+                height: 85vh;
+                width: 47%;
+                background: white;
+                color: black;
+            }
+
+            #ta{
+                padding: 10px;
+                width: 100%;
+                height: 100%;
+                background: #36454F;
+                color:  white;
+                font-size: 15px;
+                resize: none;
+                overflow-y: auto;
+            }
+
+        </style>
+        
+        <div class="parent">
+            <div class="navigation">
+                <p class="heading"> Live Interpreter </p>
+                <li>Time:<span class="d_and_t"> 00:00:00 </span></li>
+                <li>Date:<span class="d_and_t"> yyyy-mm-dd </span></li>
+                <li> 
+                    <input type="radio" id="live_sel" name="mode" value="live" checked>
+                    <label for="live">Live Interpreter Mode </label><br> 
+                    <p class="info" >It will interprete HTML and CSS as you type in.</p>
+                </li>
+                <li> 
+                    <input type="radio" id="live_sel" name="mode" value="editor"> 
+                    <label for="editor">Editor Mode </label><br> 
+                    <p class="info" >Run JS also</p>
+                </li>
+            </div>
+            <div class="code_here">
+                <button id="compile" class="compile">Run</button>
+                <button id="compile2" class="compile save" onclick="download(get_code(), 'your_code', 'html')">Save</button>
+                <div id="ta" spellcheck="false" onkeyup="mode_check()"></div>
+            </div>
+            <iframe id="code" class="output_here"></iframe> <!--div> </div-->
+        </div>
+
+        <script type="text/javascript">
+
+            function editable1() {
+                document.getElementById("ta").contentEditable = true;
+            }
+
+            editable1();
+
+            function getDate() {
+                let date = new Date();
+                let final_date = ' ' + date.getFullYear() + '-' + (date.getMonth() +1) + '-' + date.getDate();
+                document.getElementsByTagName('span')[1].innerHTML = final_date;
+            }
+
+            getDate();
+
+            function getTime(){
+                let time = new Date();
+                let final_time = ' ' + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
+                document.getElementsByTagName('span')[0].innerHTML = final_time;
+            }
+
+            getTime()
+            setInterval(getTime, 1000);
+
+            function get_code() {
+                let code = document.getElementById('ta').textContent;
+                return code;
+            }
+
+            function mode_check() {
+                let val = "live";
+                let modes = document.getElementsByName("mode");
+                for(var mode of modes )
+                {
+                    if(mode.checked)
+                    {
+                       val = mode.value;
+                    }
+                }
+
+                if(val == "live")
+                {
+                    intepreter_mode()
+                }
+
+                if(val == "editor") {
+                    editor_mode()
+                }
+            }
+
+            setInterval(mode_check, 1000);
+
+            function intepreter_mode() {
+                document.getElementById('compile').style.display = "none"
+                document.getElementById('compile2').style.display = "none"
+                document.getElementById('ta').style.height ="100%"
+                let code = get_code() 
+                run_code(code.replace(/<script>/g, "<br> <br> <span style=\"color:red; background: black\">!!Warning: Scripts are disabled in Live Mode as some functions can create infinite loops; Use <b>Editor Mode to run Scripts</b> "))
+                //document.getElementById('code').innerHTML = code; //updated to better solution.
+            }
+
+            function editor_mode() {
+                document.getElementById('compile').style.display = "inline" 
+                document.getElementById('compile2').style.display = "inline" 
+                document.getElementById('ta').style.height ="92%"
+            }
+
+            document.getElementById("compile").addEventListener("click", run);
+
+            function run() {
+                let code = get_code()
+                run_code(code)   
+            }
+            
+
+            function run_code(code) {
+                let iframe = document.getElementById('code');
+                iframe = (iframe.contentWindow) ? iframe.contentWindow : (iframe.contentDocument.document) ? iframe.contentDocument.document : iframe.contentDocument;
+                iframe.document.open();
+                iframe.document.write(code);
+                iframe.document.close();
+                return false;
+            }
+
+            document.addEventListener('keydown', e => {
+              if (e.ctrlKey && e.key === 's') {
+                // Prevent the Save dialog to open
+                    e.preventDefault();
+                    let code = get_code();
+                    download(code, "your_code", "html")
+                }
+            });
+
+            function download(code, name, type) {
+                saveAs(
+                  new Blob(
+                        [code], {type: type + code.characterSet}
+                    ), name + '.' + type
+                );
+            }
+        </script>
+    </body>
+</html>
