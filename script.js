@@ -37,7 +37,13 @@ window.onload = function() {
 
     function getDate() {
         let date = new Date();
-        let final_date = ' ' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+        let month = (date.getMonth() + 1)
+        let day = date.getDate();
+
+        if (month < 10) month = `0${month}`
+        if (day < 10) day = `0${day}`
+        
+        let final_date = ' ' + date.getFullYear() + '-' + month + '-' + day 
         document.getElementsByTagName('span')[1].innerHTML = final_date;
     }
 
@@ -45,7 +51,16 @@ window.onload = function() {
 
     function getTime() {
         let time = new Date();
-        let final_time = ' ' + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
+        
+        let hours = time.getHours()
+        let minutes = time.getMinutes()
+        let seconds = time.getSeconds()
+        
+        if (seconds < 10) seconds = `0${seconds}`
+        if (minutes < 10) minutes = `0${minutes}`
+        if (hours < 10) hours = `0${hours}`
+
+        let final_time = ' ' + hours + ":" + minutes + ":" + seconds;
         document.getElementsByTagName('span')[0].innerHTML = final_time;
     }
 
