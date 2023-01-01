@@ -27,11 +27,13 @@
                 </li>
             </div>
             <div class="code_here">
-                <button id="compile" class="compile">Run</button>
-                <button id="compile2" class="compile save" onclick="download(get_code(), 'your_code', 'html')">Save</button>
+                <div id="compiler" class="compiler">
+                    <button id="compile" class="compile">Run</button>
+                    <button id="compile2" class="compile save" onclick="download(get_code(), 'your_code', 'html')">Save</button>
+                </div>
                 <div id="ta" spellcheck="false"></div>
             </div>
-            <iframe id="code" class="output_here"></iframe> <!--div> </div-->
+            <iframe id="code" class="output_here"></iframe>
         </div>
     </body>
 </html>
