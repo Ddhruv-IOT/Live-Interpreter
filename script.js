@@ -1,5 +1,11 @@
 window.onload = function() {
     
+    function getlastcode() {
+        document.getElementById("ta").innerText = localStorage.getItem("lastcode");
+    }
+    
+    getlastcode()
+    
     x = document.getElementById("ta")
 
     let val = "live";
@@ -81,6 +87,9 @@ window.onload = function() {
         document.getElementById('ta').style.height = "100%"
         let code = get_code()
         run_code(code.replace(/<script>/g, "<br> <br> <span style=\"color:red; background: black\">!!Warning: Scripts are disabled in Live Mode as some functions can create infinite loops; Use <b>Editor Mode to run Scripts</b> "))
+        if (typeof(Storage) !== "undefined") {
+            localStorage.setItem("lastcode", code);
+        }
         //document.getElementById('code').innerHTML = code; //updated to better solution.
     }
 
@@ -109,7 +118,7 @@ window.onload = function() {
     }
 
     save = document.getElementById("compile2")
-    
+
     save.onclick = function(){
         download(get_code(), 'your_code', 'html')
     }
