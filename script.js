@@ -104,6 +104,9 @@ window.onload = function() {
 
     function run() {
         let code = get_code()
+         if (typeof(Storage) !== "undefined") {
+            localStorage.setItem("lastcode", code);
+        }
         run_code(code)
     }
 
