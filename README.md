@@ -42,10 +42,10 @@ but we need to click on run button for code execution.
 - Syntax Coloring
 
 ## 🔴🔴 Live Demo: 
-[here](https://ddhruv-iot.github.io/Live-Interpreter_project/)
+[Click here](https://ddhruv-iot.github.io/Live-Interpreter_project/)
 
-## 📽️📽️ Demo Video: 
-*coming soon* 
+## 📽️📽️ Demo Video and LinkedIn Post: 
+[Click here](https://www.linkedin.com/posts/ddhruv-arora-13a868192_training-thankyou-javascript-activity-6954099829178261504-HQci?utm_source=share&utm_medium=member_desktop)
 
 # 🙏🙏 Thank you
 - All suggestions are warmly welcomed.
