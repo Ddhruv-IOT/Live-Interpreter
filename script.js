@@ -108,6 +108,12 @@ window.onload = function() {
         return false;
     }
 
+    save = document.getElementById("compile2")
+    
+    save.onclick = function(){
+        download(get_code(), 'your_code', 'html')
+    }
+
     document.addEventListener('keydown', e => {
         if (e.ctrlKey && e.key === 's') {
             // Prevent the Save dialog to open
