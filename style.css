@@ -65,15 +65,23 @@ li:hover .info {
   background: black;
 }
 
+.compiler {
+    margin: 10px;
+    display: none;
+}
+
 .compile {
   position: sticky;
   z-index: 7;
+  margin: 5px;
   padding: 10px;
   background: gray;
   color: white;
   align-items: center;
   border-radius: 20px 20px;
   display: none;
+  border-width: 5px;
+  border-color: lime blue;
 }
 
 .compile:hover {
