@@ -68,6 +68,10 @@ window.onload = function() {
 
         let final_time = ' ' + hours + ":" + minutes + ":" + seconds;
         document.getElementsByTagName('span')[0].innerHTML = final_time;
+
+        if(hours == 0 && minutes == 0 && seconds == 0){
+            getDate()
+        }
     }
 
     getTime()
