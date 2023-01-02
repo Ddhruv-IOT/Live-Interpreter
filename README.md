@@ -34,10 +34,10 @@ but we need to click on run button for code execution.
 - Dynamic Display
 - Allows to download your code
 - Lightweight and fast
+- Automatic code backup
 
 ## 🔮🔮 Future Scopes
 - Adding GitHub Support
-- Adding Chrome Storage
 - Code Completion
 - Syntax Coloring
 
